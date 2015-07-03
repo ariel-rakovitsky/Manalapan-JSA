@@ -1,0 +1,41 @@
+<html>
+	<head>
+		<title>Manalapan JSA</title>
+		<link rel="shortcut icon" href="icon.ico" />
+		<link rel="stylesheet" type="text/css" href="standard.css">
+		<meta name="description" content="Manalapan JSA">
+		<script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.4.2.min.js"></script>
+		<script>
+			function logout(){
+				Parse.User.logOut();
+				window.open("index.html", '_top');
+			}
+			function populate(){
+				Parse.initialize("5ZjkcrMrZAuvGx70yRJcQ8swS2L1GBuMp39Ro1FO", "Qj2XWfGH0LpxCzIKUvtMn2Z2W7UGg6WmWN72GahF");
+				var currentUser = Parse.User.current();
+				if (currentUser) {
+					//document.getElementById("space1").innerHTML='<a style="color:#8C2424; font-weight:bold">'+currentUser.get("name")+'</a>';
+					document.getElementById("space2").innerHTML='<table><tr><td><a style="color:#8C2424; font-weight:bold; padding-right:25">'+currentUser.get("name")+'</a></td><td><a href="add.html" target="_top" id="toplink">Add</a><br/><a onclick="logout()" id="toplink">Logout</a></td></tr></table>';
+				}
+				else{
+				}	
+			}
+		</script>
+	</head>
+	<body onload="populate()">
+		<table style='width:100%; text-align:center; padding-right:25; min-width:850px;' border='0'>
+  			<tr>
+    			<td rowspan='2'><img src='https://lh4.ggpht.com/6JAnLD5cwkgkwJWTxpeAQUFUb3M-vqiPiGDYAd8hPMNe-PG_iNHJE_iUaBm_qEKDcA=w300' height='150px'/></td>
+    			<td colspan='3' style="text-align:left; color:#8C2424; font-size:60">Manalapan JSA</td> 
+    			<td align='right' id="space2" colspan="2" style='padding-right:25'><a href="login.html" target="_top" id="toplink">Login</a><br/><a id="toplink" href="signup.html" target="_top">Sign Up</a></td>
+  			</tr>
+  			<tr>
+    			<td width='20%'><a class='navigation' href="index.html" target="_top">Home</a></td> 
+    			<td width='20%'><a class='navigation' href="fundraising.html" target="_top">Fundraising</a></td>
+    			<td width='20%'><a class='navigation' href="page.html" target="_top">Page</a></td>
+    			<td width='20%'><a class='navigation' href="board.html" target="_top">Board</a></td>
+    			<td width='20%'><a class='navigation' href="cabinet.html" target="_top">Cabinet</a></td>
+  			</tr>
+  		</table>
+	</body>
+</html>

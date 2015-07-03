@@ -1,0 +1,58 @@
+<html>
+	<head>
+		<title>Manalapan JSA</title>
+		<link rel="shortcut icon" href="icon.ico" />
+		<link rel="stylesheet" type="text/css" href="standard.css">
+		<script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.4.2.min.js"></script>
+		<script>
+			function submit(){
+				Parse.initialize("5ZjkcrMrZAuvGx70yRJcQ8swS2L1GBuMp39Ro1FO", "Qj2XWfGH0LpxCzIKUvtMn2Z2W7UGg6WmWN72GahF");
+				var username = document.getElementById("username").value.trim().toLowerCase();
+				var password = document.getElementById("passw").value.trim().toLowerCase();
+				Parse.User.logIn(username, password, {
+  					success: function(user) {
+   						window.location.assign("index.html");
+  					},
+  					error: function(user, error) {
+    					alert("Error: Incorrect Email/Password");
+  					}
+				});
+			}
+		</script>
+	</head>
+	
+	<body>
+		<object style="width:100%; height:180; overflow:hidden; position:relative" data="default.html"></object>
+  		<br/><br/><br/>
+  		<center>
+  			<table style='width:35%; background-color:#8C2424;' border='0'>
+  				<tr>
+  					<td colspan = '2'>
+  						<center><H2 style='color:white; padding-top:15; padding-bottom:0'>Login</H2></center>
+  					</td>
+  				</tr>
+  				<tr>
+  					<td style='text-align:right; width:45%'>
+  						<a style='color:white'>Email:</a>
+  					</td>
+  					<td>
+  						<input type="text" id="username">
+  					</td>
+  				</tr>
+  				<tr>
+  					<td style='text-align:right'>
+  						<a style='color:white'>Password:</a>
+  					</td>
+  					<td>
+  						<input type="password" id="passw">
+  					</td>
+  				</tr>
+  				<tr>
+  					<td colspan='2'>
+  						<center style='padding-bottom:15; padding-top:15'><button id="submit" onclick='submit()'>Login</button></center>
+  					</td>
+  				</tr>
+  			</table>
+  		</center>
+	</body>
+</html>

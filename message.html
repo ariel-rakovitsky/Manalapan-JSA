@@ -1,0 +1,106 @@
+<html>
+	<head>
+		<title>Manalapan JSA</title>
+		<link rel="shortcut icon" href="icon.ico" />
+		<link rel="stylesheet" type="text/css" href="standard.css">
+		<script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.4.2.min.js"></script>
+		<script>
+			function populate(){
+				Parse.initialize("5ZjkcrMrZAuvGx70yRJcQ8swS2L1GBuMp39Ro1FO", "Qj2XWfGH0LpxCzIKUvtMn2Z2W7UGg6WmWN72GahF");
+				
+				var parameters = location.search.substring(1).split("&");
+				var temp = parameters[0].split("=");
+    			var id = unescape(temp[1]);
+				
+				var Message = Parse.Object.extend("Message");
+				var query = new Parse.Query(Message);
+				query.equalTo('objectId', id)
+				
+				query.find({
+ 					success: function(results) {
+    					document.getElementById("title").textContent=results[0].get("title");
+    					document.getElementById("author").textContent=results[0].get("author");
+    					document.getElementById("date").textContent=results[0].get("date")+" -- ";
+    					document.getElementById("body").textContent=results[0].get("body");
+  					},
+  					error: function(error) {
+    					alert("Error: " + error.code + " " + error.message);
+  					}
+				});
+				var Comment = Parse.Object.extend("Comment");
+				var query2 = new Parse.Query(Comment);
+				query2.equalTo('postid', id)
+				query2.descending('updatedAt');
+				
+				query2.find({
+ 					success: function(results) {
+ 						for(i=0; i<results.length; i++){
+    						document.getElementById("commenttable").insertAdjacentHTML('afterbegin','<tr><td><h4 style="padding-top:15">'+results[i].get("name")+'</h4><a>'+results[i].get("comment")+'</a></td> </tr>');
+    					}
+  					},
+  					error: function(error) {
+    					alert("Error: " + error.code + " " + error.message);
+  					}
+				});
+			}
+			function submit(){
+				Parse.initialize("5ZjkcrMrZAuvGx70yRJcQ8swS2L1GBuMp39Ro1FO", "Qj2XWfGH0LpxCzIKUvtMn2Z2W7UGg6WmWN72GahF");
+				var currentUser = Parse.User.current();
+				if(!currentUser){
+					alert("Must be logged in!");
+				}
+				if(currentUser.get("emailVerified") && currentUser.get("trusted")){
+					comment();
+				}
+				if(!(currentUser.get("emailVerified"))){
+					alert("You have not verified your email! If you believe this is a mistake, try logging out and logging back in, or contacting ariel.rakovitsky@gmail.com");
+				}
+				if(currentUser.get("emailVerified") && !(currentUser.get("trusted"))){
+					alert("You have not yet been verified by a human, the second step of the verification process. Make sure you have tried logging out and logging back in! If this does not work, please allow us a few days after signing up to make sure you are a club member.We apologize for the delay. If you believe this is a mistake or something is wrong, contact ariel.rakovitsky@gmail.com");
+				}
+			}
+			function comment(){
+				Parse.initialize("5ZjkcrMrZAuvGx70yRJcQ8swS2L1GBuMp39Ro1FO", "Qj2XWfGH0LpxCzIKUvtMn2Z2W7UGg6WmWN72GahF");
+				var currentUser = Parse.User.current();
+				if (currentUser) {
+					var parameters = location.search.substring(1).split("&");
+					var temp = parameters[0].split("=");
+    				var id = unescape(temp[1]);
+    				
+					var commentbody = document.getElementById("commentbox").value.trim();
+					var Comment = Parse.Object.extend("Comment");
+					var comment = new Comment();
+					comment.set("name", currentUser.get("name"));
+					comment.set("comment", commentbody);
+					comment.set("postid", id);
+					comment.save();
+        			window.location.assign("message.html?id="+id); 
+				} 
+				else {
+					alert("Please Sign In To Comment");
+				}
+			}
+		</script>
+	</head>
+	
+	<body onload="populate()">
+		<object style="width:100%; height:180; overflow:hidden; position:relative" data="default.html"></object>
+  			<table style='width:100%; padding-left:25' cellspacing='10' id='news'>
+  					<tr>
+  						<td>
+  							<br/>
+  							<H2 style="color:#8C2424"><a id="title"></a></H2>
+  							<H3 style="color:#8C2424; font-style: italic;"><a id="date"></a><a id="author"></a></H3>
+  							<a id="body"></a>
+  							<H2 style="color:#8C2424">Comments</H2>
+  							<table id="commenttable">
+  							</table>
+  							<br/><br/>
+  							<H3>Add Comment</H3>
+  							<textarea rows="5" cols="100" id="commentbox"></textarea><br/><br/>
+  							<button id="submit" style="width:75;height:30" onclick="submit()">Comment</button>
+  						</td>
+  					</tr>
+  			</table>
+	</body>
+</html>

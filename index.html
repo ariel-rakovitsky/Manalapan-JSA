@@ -1,0 +1,94 @@
+<html>
+	<head>
+		<title>Manalapan JSA</title>
+		<link rel="shortcut icon" href="icon.ico" />
+		<link rel="stylesheet" type="text/css" href="standard.css">
+		<meta name="description" content="Manalapan JSA">
+		<script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.4.2.min.js"></script>
+		<script>
+			function clicked(id){
+				window.location.assign("message.html?id="+id);
+			}
+			function populate(){
+				Parse.initialize("5ZjkcrMrZAuvGx70yRJcQ8swS2L1GBuMp39Ro1FO", "Qj2XWfGH0LpxCzIKUvtMn2Z2W7UGg6WmWN72GahF");
+				var Message = Parse.Object.extend("Message");
+				var query = new Parse.Query(Message);
+				query.ascending('updatedAt');
+				query.find({
+ 					success: function(results) {
+    					for (var i = 0; i < results.length; i++) { 
+     						var object = results[i];
+     						var id = object.id;
+     						var bubble = "bubble";
+     						document.getElementById("news").insertAdjacentHTML('afterbegin', '<tr><td><div class="clickable" id="'+id+'" onclick="clicked(this.id)"><H2 style="color:#8C2424"><a class="title">'+object.get("title")+'</a></H2><H3 style="color:#8C2424; font-style: italic;">'+object.get("date")+' -- '+object.get("author")+'</H3>'+object.get("body")+'</div></td></tr>');
+    					}
+  					},
+  					error: function(error) {
+    					alert("Error: " + error.code + " " + error.message);
+  					}
+				});
+			}
+		</script>
+	</head>
+	
+	<body onload='populate()'>
+	<object style="width:100%; height:180; overflow:hidden; position:relative" data="default.html"></object>
+  		<table id='table1' style='width:100%; height:1000px; vertical-align:top; padding-right:25' border='0'>
+  			<tr>
+  				<td style='width:75%'>
+  					<!--Main Content- 1 table row per story-->
+  					<table width='100%' style='vertical-align:top'>
+  						<div id="news" style="vertical-align:top; overflow-y:scroll; height:100%">
+  						</div>
+  					</table>
+ 				</td>
+ 				<td style='width:25%; vertical-align:top;'>
+ 					<!--Side Bar-->
+ 					<table>
+ 						<!--JSA Info-->
+ 						<tr>
+ 							<td>
+ 								<H3>What is JSA?</H3>
+ 									Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean sagittis mauris eleifend augue malesuada ultrices. Vestibulum iaculis erat sit amet urna mattis rhoncus id sed ante. Sed lectus mauris, lacinia et ultricies eu, rhoncus quis lacus. Nullam dictum in lorem vel consequat. Ut eu tortor elit. Cras id dui eget nisl cursus venenatis tristique id risus. Proin non velit vitae libero lobortis euismod. Morbi sed ante felis. Cras eget ultricies elit, et pellentesque neque.
+ 							</td>
+ 						</tr>
+ 						<!--Next Debate-->
+ 						<tr>
+ 							<td>
+ 								<br/>
+ 								<H3>Debate Topic</H3>
+ 								<a style='line-height: 150%'>
+ 								The debate topic for <a style='font-style:italic'>5/4</a> will be:<br/>
+ 								<h5>Resolved the progressive tax harms the American economy.</h5>
+ 								</a>
+ 							</td>
+ 						</tr>
+ 						<!--Upcoming Events-->
+ 						<tr>
+ 							<td>
+ 								<H3>Upcoming Events</H3>
+ 								<a style='line-height: 150%'>
+ 								Fall State 2015 - October 67th <br/>
+ 								Fall One Day 2015 - September 68th <br/>
+ 								First Club Meeting - September 45th <br/>
+ 								</a>
+ 								<br/>
+ 							</td>
+ 						</tr>
+ 						<!--Contact-->
+ 						<tr>
+ 							<td>
+ 								<H3>Contact Us</H3>
+ 								<a style='line-height: 150%'>
+ 								John Smith -- (555) 678-123 <br/> <a style='font-style:italic; line-height:1.5'> john.smith@gmail.com </a><br/>
+ 								John Smith -- (555) 678-123 <br/> <a style='font-style:italic; line-height:1.5'> john.smith@gmail.com </a><br/>
+ 								John Smith -- (555) 678-123 <br/> <a style='font-style:italic; line-height:1.5'> john.smith@gmail.com </a><br/>
+ 								</a>
+ 							</td>
+ 						</tr>
+ 					</table>
+ 				</td> 				
+  			</tr>
+  		</table>
+	</body>
+</html>
