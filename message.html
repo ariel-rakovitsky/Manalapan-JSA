@@ -10,7 +10,7 @@
 				
 				var parameters = location.search.substring(1).split("&");
 				var temp = parameters[0].split("=");
-    			var id = unescape(temp[1]);
+    				var id = unescape(temp[1]);
 				
 				var Message = Parse.Object.extend("Message");
 				var query = new Parse.Query(Message);
