@@ -20,8 +20,8 @@ ul {
 }
 
 .navigation:hover, .navigation:active {
-    background-color: #FFFFFF;
-    color: #8C2424;
+    background-color: #983A3A;
+    color: #FFFFFF;
 }
 
 .clickable:link, .clickable:visited, .clickable:hover, .clickable:active{
