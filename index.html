@@ -6,6 +6,7 @@
 		<meta name="description" content="Manalapan JSA">
 		<script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.4.2.min.js"></script>
 		<script>
+			var times = 5;
 			function clicked(id){
 				window.location.assign("message.html?id="+id);
 			}
@@ -13,15 +14,18 @@
 				Parse.initialize("5ZjkcrMrZAuvGx70yRJcQ8swS2L1GBuMp39Ro1FO", "Qj2XWfGH0LpxCzIKUvtMn2Z2W7UGg6WmWN72GahF");
 				var Message = Parse.Object.extend("Message");
 				var query = new Parse.Query(Message);
-				query.ascending('updatedAt');
+				query.descending('updatedAt');
 				query.find({
  					success: function(results) {
-    					for (var i = 0; i < results.length; i++) { 
+ 						var i=(times-5);
+    					while (i<times && i < results.length) { 
      						var object = results[i];
      						var id = object.id;
      						var bubble = "bubble";
-     						document.getElementById("news").insertAdjacentHTML('afterbegin', '<tr><td><div class="clickable" id="'+id+'" onclick="clicked(this.id)"><H2 style="color:#8C2424"><a class="title">'+object.get("title")+'</a></H2><H3 style="color:#8C2424; font-style: italic;">'+object.get("date")+' -- '+object.get("author")+'</H3>'+object.get("body")+'</div></td></tr>');
+     						document.getElementById("news").insertAdjacentHTML('beforeend', '<tr><td><div class="clickable" id="'+id+'" onclick="clicked(this.id)"><H2 style="color:#8C2424"><a class="title">'+object.get("title")+'</a></H2><H3 style="color:#8C2424; font-style: italic;">'+object.get("date")+' -- '+object.get("author")+'</H3>'+object.get("body")+'</div></td></tr>');
+    						i++;
     					}
+    					times+=5;
   					},
   					error: function(error) {
     					alert("Error: " + error.code + " " + error.message);
@@ -38,9 +42,11 @@
   				<td style='width:75%'>
   					<!--Main Content- 1 table row per story-->
   					<table width='100%' style='vertical-align:top; height:100%'>
-  						<div id="news" style="vertical-align:top; overflow-y:scroll; height:100%">
+  						<div style="vertical-align:top; overflow-y:scroll; height:100%">
+  							<div id="news">
+  							</div>
   							<br/>
-  							<a href="http://google.com">Click Here to Display More</a>
+  							<center><a href="javascript:populate()" style="color: #8C2424;"><h3>Click Here to Display More</h3></a></center>
   						</div>
   					</table>
  				</td>
