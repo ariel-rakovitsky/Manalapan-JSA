@@ -5,7 +5,18 @@
 		<link rel="stylesheet" type="text/css" href="standard.css">
 		<meta name="description" content="Manalapan JSA">
 		<script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.4.2.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 		<script>
+			//The following is jQuery syntax, used for scrolling feature
+			function bindScroll(){
+   				if($(window).scrollTop() + $(window).height() > $(document).height() - 100) {
+       				$(window).unbind('scroll');
+  					populate();
+   				}
+			}
+			//End jQuery
+
+			$(window).scroll(bindScroll);
 			var times = 5;
 			function clicked(id){
 				window.location.assign("message.html?id="+id);
@@ -42,15 +53,13 @@
   				<td style='width:75%'>
   					<!--Main Content- 1 table row per story-->
   					<table width='100%' style='vertical-align:top; height:100%'>
-  						<div style="vertical-align:top; overflow-y:scroll; height:100%">
+  						<div style="vertical-align:top; height:100%">
   							<div id="news">
   							</div>
-  							<br/>
-  							<center><a href="javascript:populate()" style="color: #8C2424;"><h3>Click Here to Display More</h3></a></center>
   						</div>
   					</table>
  				</td>
- 				<td style='width:25%; vertical-align:top;'>
+ 				<td style='width:25%; vertical-align:top; position:relative'>
  					<!--Side Bar-->
  					<table>
  						<!--JSA Info-->
