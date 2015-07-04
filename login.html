@@ -5,10 +5,11 @@
 		<link rel="stylesheet" type="text/css" href="standard.css">
 		<script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.4.2.min.js"></script>
 		<script>
-			function submit(){
+			window.onload=function() {
+    			document.getElementById('loginform').onsubmit=function() {
+    			var username = document.getElementById('loginform').elements["username"].value.trim().toLowerCase();
+				var password = document.getElementById('loginform').elements["passw"].value.trim().toLowerCase();
 				Parse.initialize("5ZjkcrMrZAuvGx70yRJcQ8swS2L1GBuMp39Ro1FO", "Qj2XWfGH0LpxCzIKUvtMn2Z2W7UGg6WmWN72GahF");
-				var username = document.getElementById("username").value.trim().toLowerCase();
-				var password = document.getElementById("passw").value.trim().toLowerCase();
 				Parse.User.logIn(username, password, {
   					success: function(user) {
    						window.location.assign("index.html");
@@ -17,7 +18,10 @@
     					alert("Error: Incorrect Email/Password");
   					}
 				});
+   				return false;
+  				}
 			}
+
 		</script>
 	</head>
 	
@@ -25,6 +29,7 @@
 		<iframe style="width:100%; height:200; overflow:hidden; position:relative" scrolling ="no" frameBorder="0" src="default.html"></iframe>
   		<br/><br/><br/>
   		<center>
+  		<form id="loginform" method="post">
   			<table style='width:35%; background-color:#8C2424;' border='0'>
   				<tr>
   					<td colspan = '2'>
@@ -36,7 +41,7 @@
   						<a style='color:white'>Email:</a>
   					</td>
   					<td>
-  						<input type="text" id="username">
+  						<input type="text" name="username">
   					</td>
   				</tr>
   				<tr>
@@ -44,15 +49,16 @@
   						<a style='color:white'>Password:</a>
   					</td>
   					<td>
-  						<input type="password" id="passw">
+  						<input type="password" name="passw">
   					</td>
   				</tr>
   				<tr>
   					<td colspan='2'>
-  						<center style='padding-bottom:15; padding-top:15'><button id="submit" onclick='submit()'>Login</button></center>
+  						<center style='padding-bottom:15; padding-top:15'><button id="submit" type="submit">Login</button></center>
   					</td>
   				</tr>
   			</table>
+  		</form>
   		</center>
 	</body>
 </html>

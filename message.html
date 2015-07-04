@@ -22,11 +22,16 @@
     					document.getElementById("author").textContent=results[0].get("author");
     					document.getElementById("date").textContent=results[0].get("date")+" -- ";
     					document.getElementById("body").innerHTML=results[0].get("body");
+    					var currentUser = Parse.User.current();
+    						if(currentUser.get("name")==results[0].get("author") || currentUser.get("name")=='Ariel Rakovitsky'){
+    							document.getElementById("delete").innerHTML = '<h3><button style="text-decoration:none; color:#8C2424;" onclick="deletepost()">Click Here to Delete This Post<a></h3>';
+    						}
   					},
   					error: function(error) {
     					alert("Error: " + error.code + " " + error.message);
   					}
 				});
+				
 				var Comment = Parse.Object.extend("Comment");
 				var query2 = new Parse.Query(Comment);
 				query2.equalTo('postid', id)
@@ -80,6 +85,30 @@
 					alert("Please Sign In To Comment");
 				}
 			}
+			function deletepost(){
+				var parameters = location.search.substring(1).split("&");
+				var temp = parameters[0].split("=");
+    			var id = unescape(temp[1]);
+				Parse.initialize("5ZjkcrMrZAuvGx70yRJcQ8swS2L1GBuMp39Ro1FO", "Qj2XWfGH0LpxCzIKUvtMn2Z2W7UGg6WmWN72GahF");
+				var Message = Parse.Object.extend("Message");
+				var query3 = new Parse.Query(Message);
+				query3.equalTo('objectId', id);
+				query3.find({
+ 					success: function(results) {
+    					results[0].destroy({
+  							success: function(myObject) {
+    							window.location.assign("index.html");
+  							},
+  							error: function(myObject, error) {
+  								alert("Error: " + error.code + " " + error.message);
+  							}
+						});
+  					},
+  					error: function(error) {
+    					alert("Error: " + error.code + " " + error.message);
+  					}
+				});				
+			}
 		</script>
 	</head>
 	
@@ -90,6 +119,7 @@
   						<td>
   							<br/>
   							<H2 style="color:#8C2424"><a id="title"></a></H2>
+  							<span id="delete"></span>
   							<H3 style="color:#8C2424; font-style: italic;"><a id="date"></a><a id="author"></a></H3>
   							<a id="body"></a>
   							<H2 style="color:#8C2424">Comments</H2>
@@ -104,3 +134,6 @@
   			</table>
 	</body>
 </html>
+
+
+

@@ -4,8 +4,28 @@
 		<link rel="shortcut icon" href="icon.ico" />
 		<link rel="stylesheet" type="text/css" href="standard.css">
 		<script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.4.2.min.js"></script>
+		<script type="text/javascript" src="tinymce/js/tinymce/tinymce.min.js"></script>
+    	<script type="text/javascript">
+        	tinymce.init({
+          	  selector: "#textarea",
+          	  plugins: [
+        			"advlist autolink lists link image charmap print preview hr anchor pagebreak",
+        			"searchreplace wordcount visualblocks visualchars code",
+       				"insertdatetime media nonbreaking save table contextmenu directionality",
+       				"emoticons template paste textcolor colorpicker textpattern imagetools"
+    			],
+          	  toolbar: "bold italic underline strikethrough alignleft aligncenter alignright alignjustify styleselect fontselect cut copy paste numlist outdent indent blockquote undo redo removeformat subscript superscript forecolor backcolor| link unlink | spellchecker | code | table | emoticons | image insertfile",
+          	  image_advtab: true,
+          	  style_formats: [
+        			{title: 'Subheader 1', block: 'h3', styles: {color: '#8C2424'}},
+        			{title: 'Subheader 2', block: 'h4', styles: {color: '#8C2424'}},
+       				{title: 'Subheader 3', block: 'h5', styles: {color: '#8C2424'}},
+    			],
+        	});
+    	</script>
 		<script type="text/javascript">
-			function submit(){
+			window.onload=function() {
+				document.getElementById('addform').onsubmit=function() {
 				Parse.initialize("5ZjkcrMrZAuvGx70yRJcQ8swS2L1GBuMp39Ro1FO", "Qj2XWfGH0LpxCzIKUvtMn2Z2W7UGg6WmWN72GahF");
 				var currentUser = Parse.User.current();
 				if(!currentUser){
@@ -20,10 +40,13 @@
 				if(currentUser.get("emailVerified") && !(currentUser.get("trusted"))){
 					alert("You have not yet been verified by a human, the second step of the verification process. Make sure you have tried logging out and logging back in! If this does not work, please allow us a few days after signing up to make sure you are a club member.We apologize for the delay. If you believe this is a mistake or something is wrong, contact ariel.rakovitsky@gmail.com");
 				}
+    			
+   				return false;
+  				}
 			}
 			function create(){
-				var title = document.getElementById("title").value;
-				var body = document.getElementById("body").value;
+				var title = document.getElementById('addform').elements["title"].value.trim().toLowerCase();
+				var body = document.getElementById('addform').elements["textarea"].value.trim().toLowerCase();
 				var d = new Date();
 				var date= d.toDateString();
 				Parse.initialize("5ZjkcrMrZAuvGx70yRJcQ8swS2L1GBuMp39Ro1FO", "Qj2XWfGH0LpxCzIKUvtMn2Z2W7UGg6WmWN72GahF");
@@ -34,21 +57,37 @@
         		message.set("body", body);
         		message.set("date", date);
 				message.save();
-        		window.location.assign("index.html"); 
+				
+				var Message2 = Parse.Object.extend("Message");
+				var query = new Parse.Query(Message2);
+				query.equalTo('body', body)
+				
+				query.find({
+ 					success: function(results) {
+    					window.location.assign("index.html");
+  					},
+  					error: function(error) {
+  					}
+				}); 
 			}
 		</script>
 	</head>
 	
 	<body>
 		<iframe style="width:100%; height:200; overflow:hidden; position:relative" scrolling ="no" frameBorder="0" src="default.html"></iframe>
-  		<center><div style='padding-left:35'>
+  		<center><div style='padding-left:75; padding-right:75'><form method="post" id="addform">
   			<H1>Add<H1>
   			<H3>Title<H3>
-  			<input size="40" type="text" id="title">
-  			<H3>Body<H3>
-  			<textarea id="body" rows="10" cols="75"></textarea>
+  			<input size="40" type="text" name="title" id="title">
+  			<H3>Body</H3>
+  			<h5>
+  			*Please Note: as of the moment, file uploads directly from the computer are not possible. For images, providing a URL will work. <br/>
+  			A workaround is to upload the document to Google Drive, and get a sharing link, then paste that link into this editor. <br/>
+  			*Please set an image width to no larger than 100 (pixels) and allow height to auto-adjust<br/>
+  			</h5>
+  			<textarea id="textarea" style="height:500" type="text" name="textarea"></textarea>
   			<br/>
-  			<button size="200" id="submit" onclick="submit()" style='width:80px;height:40px'>Submit</button>
-  		<div></center>
+  			<button size="200" id="submit" type="submit" style='width:80px;height:40px'>Submit</button>
+  		</form><div></center>
 	</body>
 </html>
