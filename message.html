@@ -21,7 +21,7 @@
     					document.getElementById("title").textContent=results[0].get("title");
     					document.getElementById("author").textContent=results[0].get("author");
     					document.getElementById("date").textContent=results[0].get("date")+" -- ";
-    					document.getElementById("body").textContent=results[0].get("body");
+    					document.getElementById("body").innerHTML=results[0].get("body");
   					},
   					error: function(error) {
     					alert("Error: " + error.code + " " + error.message);
