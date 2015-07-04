@@ -45,10 +45,39 @@
   					}
 				});
 			}
+			function populate2(){
+				Parse.initialize("5ZjkcrMrZAuvGx70yRJcQ8swS2L1GBuMp39Ro1FO", "Qj2XWfGH0LpxCzIKUvtMn2Z2W7UGg6WmWN72GahF");
+				var DebateTopic = Parse.Object.extend("DebateTopic");
+				var query2 = new Parse.Query(DebateTopic);
+				query2.descending('updatedAt');
+				query2.find({
+ 					success: function(results) {
+ 						document.getElementById("debatedate").innerHTML = results[0].get("Date");
+ 						document.getElementById("debate").innerHTML = results[0].get("Debate");
+  					},
+  					error: function(error) {
+    					alert("Error: " + error.code + " " + error.message);
+  					}
+				});
+				
+				var Upcoming = Parse.Object.extend("Upcoming");
+				var query3 = new Parse.Query(Upcoming);
+				query3.ascending('createdAt');
+				query3.find({
+ 					success: function(results) {
+ 						for(var i=0; (i<5 && i<results.length); i++){
+ 							document.getElementById("upcoming").insertAdjacentHTML('afterbegin', '<a href="'+results[i].get("link")+'" style="color:black; font-style:italic; line-height: 200%">'+results[i].get("title")+' - '+results[i].get("date")+' </a><br/>');
+  						}
+  					},
+  					error: function(error) {
+    					alert("Error: " + error.code + " " + error.message);
+  					}
+				});
+			}
 		</script>
 	</head>
 	
-	<body onload='populate(); populate()' style="height:100%">
+	<body onload='populate(); populate(); populate2()' style="height:100%">
 	<iframe style="width:100%; height:200; overflow:hidden; position:relative" scrolling ="no" frameBorder="0" src="default.html"></iframe>
   		<table id='table1' style='width:100%; height:100%; vertical-align:top; padding-right:25' border='0'>
   			<tr>
@@ -68,8 +97,23 @@
  						<tr>
  							<td>
  								<H3>What is JSA?</H3>
- 									Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean sagittis mauris eleifend augue malesuada ultrices. Vestibulum iaculis erat sit amet urna mattis rhoncus id sed ante. Sed lectus mauris, lacinia et ultricies eu, rhoncus quis lacus. Nullam dictum in lorem vel consequat. Ut eu tortor elit. Cras id dui eget nisl cursus venenatis tristique id risus. Proin non velit vitae libero lobortis euismod. Morbi sed ante felis. Cras eget ultricies elit, et pellentesque neque.
- 							</td>
+ 									JSA is an organization of students who are interested in politics and government, foreign affairs, the law and education.
+ 									The Junior State of America (JSA) was created by and for these young people. 
+ 									Since its founding in 1934, more than 500,000 student members have become active, 
+ 									informed citizens through JSA. 
+									What makes JSA so unique is that students organize every aspect of the organization, 
+									from the chapter (club) level all the way to state and national administration. 
+									JSA student leaders, elected by their fellow JSA members, plan and execute all of the 
+									conventions, conferences and political-awareness events held by JSA.
+									JSA allows for an exchange of ideas through stimulating student debates, thought talks, 
+									problem solving and a variety of simulations. By participating in these activities, 
+									each member gains a more intelligent and informed viewpoint. JSA also provides a wonderful 
+									chance to meet and make friends with scores of other bright, involved students who have 
+									similar interests. It's an experience that no young person would want to miss.
+									JSA is a national organization organized at the local chapter level. 
+									These chapters collectively form regions which coordinate communication with 
+									chapters and run regional events annually. The regions form states which run 
+									three large overnight conventions a year.
  						</tr>
  						<!--Next Debate-->
  						<tr>
@@ -77,8 +121,8 @@
  								<br/>
  								<H3>Debate Topic</H3>
  								<a style='line-height: 150%'>
- 								The debate topic for <a style='font-style:italic'>5/4</a> will be:<br/>
- 								<h5>Resolved the progressive tax harms the American economy.</h5>
+ 								The debate topic for <a id="debatedate" style='font-style:italic'></a> will be:<br/>
+ 								<h5 id="debate"></h5>
  								</a>
  							</td>
  						</tr>
@@ -86,10 +130,7 @@
  						<tr>
  							<td>
  								<H3>Upcoming Events</H3>
- 								<a style='line-height: 150%'>
- 								Fall State 2015 - October 67th <br/>
- 								Fall One Day 2015 - September 68th <br/>
- 								First Club Meeting - September 45th <br/>
+ 								<a id="upcoming">
  								</a>
  								<br/>
  							</td>
