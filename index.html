@@ -10,7 +10,6 @@
 			//The following is jQuery syntax, used for scrolling feature
 			function bindScroll(){
    				if($(window).scrollTop() + $(window).height() > $(document).height() - 100) {
-       				$(window).unbind('scroll');
   					populate();
    				}
 			}
@@ -36,6 +35,9 @@
      						document.getElementById("news").insertAdjacentHTML('beforeend', '<tr><td><div class="clickable" id="'+id+'" onclick="clicked(this.id)"><H2 style="color:#8C2424"><a class="title">'+object.get("title")+'</a></H2><H3 style="color:#8C2424; font-style: italic;">'+object.get("date")+' -- '+object.get("author")+'</H3>'+object.get("body")+'</div></td></tr>');
     						i++;
     					}
+    					if(i>results.length){
+    						$(window).unbind('scroll');
+    					}
     					times+=5;
   					},
   					error: function(error) {
@@ -46,7 +48,7 @@
 		</script>
 	</head>
 	
-	<body onload='populate()' style="height:100%">
+	<body onload='populate(); populate()' style="height:100%">
 	<iframe style="width:100%; height:200; overflow:hidden; position:relative" scrolling ="no" frameBorder="0" src="default.html"></iframe>
   		<table id='table1' style='width:100%; height:100%; vertical-align:top; padding-right:25' border='0'>
   			<tr>
