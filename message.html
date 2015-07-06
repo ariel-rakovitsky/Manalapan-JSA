@@ -24,7 +24,7 @@
     					document.getElementById("body").innerHTML=results[0].get("body");
     					var currentUser = Parse.User.current();
     						if(currentUser.get("name")==results[0].get("author") || currentUser.get("name")=='Ariel Rakovitsky'){
-    							document.getElementById("delete").innerHTML = '<h3><button style="text-decoration:none; color:#8C2424;" onclick="deletepost()">Click Here to Delete This Post<a></h3><h3><button style="text-decoration:none; color:#8C2424;" onclick="editpost()">Click Here to Edit This Post<a></h3>';
+    							document.getElementById("delete").innerHTML = '<button style="text-decoration:none; color:#8C2424;" onclick="deletepost()">Click Here to Delete This Post<a></button>  <button style="text-decoration:none; color:#8C2424;" onclick="editpost()">Click Here to Edit This Post<a>';
     						}
   					},
   					error: function(error) {
