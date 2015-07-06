@@ -47,7 +47,7 @@
 			}
 			function create(){
 				var title = document.getElementById('addform').elements["title"].value.trim().toLowerCase();
-				var body = document.getElementById('addform').elements["textarea"].value.trim().toLowerCase();
+				var body = document.getElementById('addform').elements["textarea"].value.trim();
 				var d = new Date();
 				var date= d.toDateString();
 				Parse.initialize("5ZjkcrMrZAuvGx70yRJcQ8swS2L1GBuMp39Ro1FO", "Qj2XWfGH0LpxCzIKUvtMn2Z2W7UGg6WmWN72GahF");
