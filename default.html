@@ -14,7 +14,6 @@
 				Parse.initialize("5ZjkcrMrZAuvGx70yRJcQ8swS2L1GBuMp39Ro1FO", "Qj2XWfGH0LpxCzIKUvtMn2Z2W7UGg6WmWN72GahF");
 				var currentUser = Parse.User.current();
 				if (currentUser) {
-					//document.getElementById("space1").innerHTML='<a style="color:#8C2424; font-weight:bold">'+currentUser.get("name")+'</a>';
 					document.getElementById("space2").innerHTML='<table><tr><td><a style="color:#8C2424; font-weight:bold; padding-right:25">'+currentUser.get("name")+'</a></td><td><a href="add.html" target="_top" id="toplink">Add</a><br/><a onclick="logout()" id="toplink">Logout</a></td></tr></table>';
 				}
 				else{
